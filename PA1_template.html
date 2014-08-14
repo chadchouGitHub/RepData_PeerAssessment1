@@ -102,8 +102,11 @@ plot(IntervalsData, meanStepByInterval$Steps, type=&quot;l&quot;, main=&quot;5 I
 dev.off()</code></pre>
 <pre><code>## pdf 
 ##   2</code></pre>
-<p>This max steps is</p>
-<pre class="r"><code>max(meanStepByInterval$Steps)</code></pre>
+<p>This max steps happened in</p>
+<pre class="r"><code>which.max(meanStepByInterval$Steps)</code></pre>
+<pre><code>## [1] 104</code></pre>
+<p>The mean max steps number is</p>
+<pre class="r"><code>meanStepByInterval[which.max(meanStepByInterval$Steps),]</code></pre>
 <pre><code>## [1] 206.2</code></pre>
 </div>
 <div id="imputing-missing-values" class="section level2">

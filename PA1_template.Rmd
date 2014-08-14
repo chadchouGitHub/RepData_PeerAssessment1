@@ -63,9 +63,14 @@ dev.off()
 
 ```
 
-This max steps is
+This max steps happened in
 ```{r}
-max(meanStepByInterval$Steps)
+which.max(meanStepByInterval$Steps)
+```
+The mean max steps number is
+```{r}
+meanStepByInterval[which.max(meanStepByInterval$Steps),]
+
 ```
 
 
