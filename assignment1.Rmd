@@ -23,7 +23,7 @@ newStepData <- StepData[!is.na(StepData$step),]
 
 
 ## What is mean total number of steps taken per day?
-The mean for total number of steps taken per day is
+
 ```{r}
 splitDataByDate <- split(newStepData$steps, newStepData$date)
 allDays <- as.Date(sort(unique(newStepData$date)), format = "%Y-%m-%d")
@@ -31,13 +31,20 @@ sumStepByDate <- as.data.frame(sapply(splitDataByDate, sum))
 names(sumStepByDate) <- c("Steps")
 
 png(filename='EachDaySteps.png', width=480, height=480, units="px")
-hist(sumStepByDate$Steps, main="Total steps by day frecuency", xlab="Number of steps by day", ylab="Number of days", col="red", breaks = nrow(sumStepByDate))
+hist(sumStepByDate$Steps, main="Total steps by day", xlab="Number of steps in each day", ylab="Number of days", col="red", breaks = nrow(sumStepByDate))
 dev.off()
 ```
 The mean for total number of steps taken per day is
 ```{r}
 mean(sumStepByDate$Steps)
 ```
+
+The median for total steps in each day is
+```{r}
+median(sumStepByDate$Steps)
+```
+
+
 The graphic of total steps in eaach day in "EachDaySteps.png"
 
 ## What is the average daily activity pattern?

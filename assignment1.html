@@ -70,20 +70,22 @@ newStepData &lt;- StepData[!is.na(StepData$step),]</code></pre>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
-<p>The mean for total number of steps taken per day is</p>
 <pre class="r"><code>splitDataByDate &lt;- split(newStepData$steps, newStepData$date)
 allDays &lt;- as.Date(sort(unique(newStepData$date)), format = &quot;%Y-%m-%d&quot;)
 sumStepByDate &lt;- as.data.frame(sapply(splitDataByDate, sum))
 names(sumStepByDate) &lt;- c(&quot;Steps&quot;)
 
 png(filename='EachDaySteps.png', width=480, height=480, units=&quot;px&quot;)
-hist(sumStepByDate$Steps, main=&quot;Total steps by day frecuency&quot;, xlab=&quot;Number of steps by day&quot;, ylab=&quot;Number of days&quot;, col=&quot;red&quot;, breaks = nrow(sumStepByDate))
+hist(sumStepByDate$Steps, main=&quot;Total steps by day&quot;, xlab=&quot;Number of steps in each day&quot;, ylab=&quot;Number of days&quot;, col=&quot;red&quot;, breaks = nrow(sumStepByDate))
 dev.off()</code></pre>
 <pre><code>## pdf 
 ##   2</code></pre>
 <p>The mean for total number of steps taken per day is</p>
 <pre class="r"><code>mean(sumStepByDate$Steps)</code></pre>
 <pre><code>## [1] 10766</code></pre>
+<p>The median for total steps in each day is</p>
+<pre class="r"><code>median(sumStepByDate$Steps)</code></pre>
+<pre><code>## [1] 10765</code></pre>
 <p>The graphic of total steps in eaach day in “EachDaySteps.png”</p>
 </div>
 <div id="what-is-the-average-daily-activity-pattern" class="section level2">
