@@ -9,13 +9,16 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 # Reproducible Research: Peer Assessment 1
-```{r}
 
-```
 
 ## Loading and preprocessing the data
-```{r}
+Read data into R, and convert date col into Date format.
+Remove missing data in "step" col.
 
+```{r}
+StepData <-  read.csv("activity.csv", header = TRUE, na.strings="NA")
+StepData$date <- as.Date(StepData$date, format="%Y-%m-%d")
+newStepData <- StepData[!is.na(StepData$step),]
 ```
 
 
