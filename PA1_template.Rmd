@@ -50,8 +50,24 @@ The graphic of total steps in eaach day in "EachDaySteps.png"
 ## What is the average daily activity pattern?
 
 ```{r}
+IntervalsData <- sort(unique(newStepData$interval))
+DataByInterval <- split(newStepData$steps, newStepData$interval)
+meanStepByInterval <- as.data.frame(sapply(DataByInterval, mean))
+names(meanStepByInterval) <- c("Steps")
+
+
+png(filename='./figures/5interval.png', width=480, height=480, units="px")
+plot(IntervalsData, meanStepByInterval$Steps, type="l", main="5 Interval step mean", xlab="5 interval", ylab="Mean of steps")
+
+dev.off()
 
 ```
+
+This max steps is
+```{r}
+max(meanStepByInterval$Steps)
+```
+
 
 ## Imputing missing values
 ```{r}
