@@ -111,6 +111,31 @@ dev.off()</code></pre>
 </div>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
+<pre class="r"><code>rNAStepData &lt;- StepData
+meanByDate &lt;- sapply(splitDataByDate, mean)
+for(i in 1:nrow(rNAStepData)){
+      if  (is.na(rNAStepData[i,1])){
+              datei &lt;- rNAStepData[i,2]
+              rNAStepData[i,1] &lt;- meanByDate[[as.factor(datei)]]
+      }
+}</code></pre>
+<p>Use new Dataset to make new graphic, and caculate new mean.</p>
+<pre class="r"><code>splitnewDataByDate &lt;- split(rNAStepData$steps, rNAStepData$date)
+allnewDays &lt;- as.Date(sort(unique(rNAStepData$date)), format = &quot;%Y-%m-%d&quot;)
+sumOfrNAStepByDate &lt;- as.data.frame(sapply(splitnewDataByDate, sum))
+names(sumOfrNAStepByDate) &lt;- c(&quot;Steps&quot;)
+
+png(filename='./figures/reNAEachDaySteps.png', width=480, height=480, units=&quot;px&quot;)
+hist(sumOfrNAStepByDate$Steps, main=&quot;Total steps by day&quot;, xlab=&quot;Number of steps in each day&quot;, ylab=&quot;Number of days&quot;, col=&quot;red&quot;, breaks = nrow(sumOfrNAStepByDate))
+dev.off()</code></pre>
+<pre><code>## pdf 
+##   2</code></pre>
+<p>The new mean for total number of steps taken per day is</p>
+<pre class="r"><code>mean(sumOfrNAStepByDate$Steps)</code></pre>
+<pre><code>## [1] 9371</code></pre>
+<p>The new median for total steps in each day is</p>
+<pre class="r"><code>median(sumOfrNAStepByDate$Steps)</code></pre>
+<pre><code>## [1] 10395</code></pre>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>

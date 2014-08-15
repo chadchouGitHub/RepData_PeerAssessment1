@@ -75,8 +75,38 @@ meanStepByInterval[which.max(meanStepByInterval$Steps),]
 
 
 ## Imputing missing values
-```{r}
 
+```{r}
+rNAStepData <- StepData
+meanByDate <- sapply(splitDataByDate, mean)
+for(i in 1:nrow(rNAStepData)){
+      if  (is.na(rNAStepData[i,1])){
+              datei <- rNAStepData[i,2]
+              rNAStepData[i,1] <- meanByDate[[as.factor(datei)]]
+      }
+}
+
+```
+Use new Dataset to make new graphic, and caculate new mean.
+```{r}
+splitnewDataByDate <- split(rNAStepData$steps, rNAStepData$date)
+allnewDays <- as.Date(sort(unique(rNAStepData$date)), format = "%Y-%m-%d")
+sumOfrNAStepByDate <- as.data.frame(sapply(splitnewDataByDate, sum))
+names(sumOfrNAStepByDate) <- c("Steps")
+
+png(filename='./figures/reNAEachDaySteps.png', width=480, height=480, units="px")
+hist(sumOfrNAStepByDate$Steps, main="Total steps by day", xlab="Number of steps in each day", ylab="Number of days", col="red", breaks = nrow(sumOfrNAStepByDate))
+dev.off()
+
+```
+The new mean for total number of steps taken per day is
+```{r}
+mean(sumOfrNAStepByDate$Steps)
+```
+
+The new median for total steps in each day is
+```{r}
+median(sumOfrNAStepByDate$Steps)
 ```
 
 
