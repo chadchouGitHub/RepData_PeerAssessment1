@@ -111,8 +111,25 @@ median(sumOfrNAStepByDate$Steps)
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
 
+Adding new variable into dataset to indicate the weekday and weekend.
+The weekdays function add the new variable from Sunday to Monday, and for loop convert to weekday and weekend
+
+```{r}
+rNAStepData$dateWeek <- weekdays(rNAStepData$date)
+for(i in 1: nrow(rNAStepData)){
+        if(rNAStepData[i,4]=="Sunday" | rNAStepData[i,4]=="Saturday"){
+                rNAStepData[i,4] <- "Weekend"    
+        }else{
+                rNAStepData[i,4] <- "Weekday"    
+        }
+}
+```
+Split data set to weekday and weekend.
+```{r}
+weekDaySplit <- split(rNAStepData, rNAStepData$dateWeek)
+weekendData <- weekDaySplit[["Weekend"]]
+weekdayData <- weekDaySplit[["Weekday"]]
 ```
 
 You can also embed plots, for example:

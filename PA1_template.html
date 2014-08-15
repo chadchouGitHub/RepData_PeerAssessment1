@@ -139,6 +139,19 @@ dev.off()</code></pre>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
+<p>Adding new variable into dataset to indicate the weekday and weekend. The weekdays function add the new variable from Sunday to Monday, and for loop convert to weekday and weekend</p>
+<pre class="r"><code>rNAStepData$dateWeek &lt;- weekdays(rNAStepData$date)
+for(i in 1: nrow(rNAStepData)){
+        if(rNAStepData[i,4]==&quot;Sunday&quot; | rNAStepData[i,4]==&quot;Saturday&quot;){
+                rNAStepData[i,4] &lt;- &quot;Weekend&quot;    
+        }else{
+                rNAStepData[i,4] &lt;- &quot;Weekday&quot;    
+        }
+}</code></pre>
+<p>Split data set to weekday and weekend.</p>
+<pre class="r"><code>weekDaySplit &lt;- split(rNAStepData, rNAStepData$dateWeek)
+weekendData &lt;- weekDaySplit[[&quot;Weekend&quot;]]
+weekdayData &lt;- weekDaySplit[[&quot;Weekday&quot;]]</code></pre>
 <p>You can also embed plots, for example:</p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
 </div>
