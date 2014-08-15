@@ -172,4 +172,5 @@ print(fig)
 
 ```
 
+The weekend and weekday are different.
 
