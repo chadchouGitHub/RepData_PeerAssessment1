@@ -125,17 +125,51 @@ for(i in 1: nrow(rNAStepData)){
         }
 }
 ```
+
 Split data set to weekday and weekend.
+
 ```{r}
 weekDaySplit <- split(rNAStepData, rNAStepData$dateWeek)
 weekendData <- weekDaySplit[["Weekend"]]
 weekdayData <- weekDaySplit[["Weekday"]]
 ```
 
-You can also embed plots, for example:
+Process weekendData and weekdayData by "interval".
+
+weekendData
+```{r}
+
+weInterval <- unique(sort(weekendData$interval))
+splitweekendDataIntervals <- split(weekendData$steps, weInterval)
+meanSplitweekendDataIntervals <- as.data.frame(sapply(splitweekendDataIntervals, mean))
+names(meanSplitweekendDataIntervals) <- "meanSteps"
+wEMatrixValues <- as.data.frame(cbind(meanSplitweekendDataIntervals$meanSteps, weInterval, "Weekend"))
+names(wEMatrixValues) <- c("meanSteps", "interval", "weekdate")
+```
+weekdayData
+```{r}
+wdInterval <- unique(sort(weekdayData$interval))
+splitweekdayDataIntervals <- split(weekdayData$steps, wdInterval)
+meanSplitweekdayDataIntervals <- as.data.frame(sapply(splitweekdayDataIntervals, mean))
+names(meanSplitweekdayDataIntervals) <- "meanSteps"
+wDMatrixValues <- as.data.frame(cbind(meanSplitweekdayDataIntervals$meanSteps, wdInterval, "Weekday"))
+names(wDMatrixValues) <- c("meanSteps", "interval", "weekdate")
+```
+
+Make new set of weekday weekend data with variable "meanSteps", "interval", and "weekdate".
 
 ```{r}
+meanStepMatrix <- as.data.frame(rbind(wDMatrixValues,wEMatrixValues))
+meanStepMatrix$meanSteps <- as.numeric(as.character(meanStepMatrix$meanSteps))
+meanStepMatrix$interval <- as.numeric(as.character(meanStepMatrix$interval))
+```
+Make figure that show in assignment instruction.
+```{r}
+library("lattice")
+fig<- xyplot(meanStepMatrix$meanSteps ~ meanStepMatrix$interval | meanStepMatrix$weekdate, meanStepMatrix, layout=c(1,2), type="l", xlab="Interval", ylab="Number of steps")
+
+print(fig)
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
